@@ -1,2 +1,3 @@
 import { io } from 'socket.io-client';
-export default io('http://localhost:3001', { reconnectionDelay: 1000 });
+// Connect to current host so Vite's proxy forwards to the server on any device
+export default io({ reconnectionDelay: 1000 });

@@ -36,15 +36,15 @@ export default function App() {
   }, []);
 
   const tabs = [
-    { id: 'rooms',  label: 'Rooms'  },
-    { id: 'scenes', label: 'Scenes' },
-    { id: 'bpm',    label: 'BPM'    },
-    { id: 'music',  label: 'Music'  },
+    { id: 'rooms',  label: 'Rooms',  icon: '💡' },
+    { id: 'scenes', label: 'Scenes', icon: '✨' },
+    { id: 'bpm',    label: 'BPM',    icon: '♩'  },
+    { id: 'music',  label: 'Music',  icon: '🎵' },
   ];
 
   return (
-    <div style={styles.app}>
-      <header style={styles.header}>
+    <div className="app-wrap" style={styles.app}>
+      <header className="app-header" style={styles.header}>
         <div style={styles.wordmark}>
           <span style={styles.logo}>🌕</span>
           <span style={styles.logoText}>LUMA</span>
@@ -60,23 +60,24 @@ export default function App() {
         </div>
       </header>
 
-      <div style={styles.zoneRow}>
+      <div className="zone-row" style={styles.zoneRow}>
         <span style={styles.zoneTag}>⟠ Entry zone overlap: Hall + WM</span>
       </div>
 
-      <div style={styles.tabs}>
+      <div className="tab-bar" style={styles.tabs}>
         {tabs.map(t => (
-          <button key={t.id} onClick={() => setActiveTab(t.id)}
+          <button key={t.id} className="tab-item" onClick={() => setActiveTab(t.id)}
             style={{ ...styles.tab, ...(activeTab === t.id ? styles.tabActive : {}) }}>
-            {t.label}
+            <span className="tab-icon">{t.icon}</span>
+            <span className="tab-label">{t.label}</span>
           </button>
         ))}
       </div>
 
-      <main style={styles.main}>
+      <main className="main-content" style={styles.main}>
         <AnimatePresence mode="wait">
           {activeTab === 'rooms' && (
-            <motion.div key="rooms" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-10 }} style={styles.roomGrid}>
+            <motion.div key="rooms" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-10 }} className="room-grid" style={styles.roomGrid}>
               {bulbs.map((b) => (
                 <RoomCard key={b.id} id={b.id}
                   meta={{ label: b.name, icon: b.icon, protocol: b.protocol }}

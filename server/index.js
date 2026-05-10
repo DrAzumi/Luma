@@ -120,7 +120,13 @@ app.post("/spotify/disconnect", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("[LUMA] UI connected");
+  const ip = socket.handshake.headers["x-forwarded-for"] || socket.handshake.address;
+  const ua = socket.handshake.headers["user-agent"] || "";
+  const device = /iPhone|iPad/.test(ua) ? "📱 iPhone/iPad"
+    : /Android/.test(ua) ? "📱 Android"
+    : /Mobile/.test(ua) ? "📱 Mobile"
+    : "🖥  Desktop";
+  console.log(`[LUMA] ${device} connected  (${ip})`);
   socket.emit("bulbs:list", getBulbs());
   socket.emit("state:update", getState());
   socket.emit("song:status", getStatus());
@@ -169,7 +175,7 @@ io.on("connection", (socket) => {
       else if (track) socket.emit("spotify:no-features", {});
     }
   });
-  socket.on("disconnect", () => console.log("[LUMA] UI disconnected"));
+  socket.on("disconnect", () => console.log(`[LUMA] ${device} disconnected (${ip})`));
 });
 
 const PORT = 3001;

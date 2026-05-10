@@ -580,7 +580,7 @@ export default function BpmEngine() {
               <span style={s.bpmMs}>{beatMs}ms</span>
             </div>
           </div>
-          <button onClick={tap} style={s.tapBtn}>
+          <button onClick={tap} className="tap-btn" style={s.tapBtn}>
             TAP
           </button>
         </div>

@@ -4,8 +4,113 @@
   --border: #222228; --border2: #2e2e38; --text: #e8e8ee;
   --text2: #8888a0; --text3: #44445a; --accent: #f5c842;
   --online: #3ddc84; --offline: #ff4d6d; --radius: 14px; --radius-sm: 8px;
+  --tab-bar-height: 60px;
 }
 html, body, #root { height: 100%; background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; -webkit-font-smoothing: antialiased; }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+
+/* Tab icons hidden on desktop — show only label */
+.tab-icon { display: none; }
+.tab-label { display: inline; }
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Tighter app padding */
+  .app-wrap { padding: 0 14px !important; }
+
+  /* Compact header */
+  .app-header { padding: 14px 0 10px !important; }
+
+  /* Hide the "Entry zone overlap" tag — no room on mobile */
+  .zone-row { display: none !important; }
+
+  /* Tab bar: move to bottom of screen, native-app style */
+  .tab-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 200;
+    background: rgba(11, 11, 13, 0.96) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border) !important;
+    border-bottom: none !important;
+    padding: 0 0 env(safe-area-inset-bottom) !important;
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* Each tab: stacked icon + label, full height tap target */
+  .tab-item {
+    flex: 1 !important;
+    min-height: var(--tab-bar-height) !important;
+    height: var(--tab-bar-height) !important;
+    border-radius: 0 !important;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding: 8px 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    background: transparent !important;
+  }
+
+  .tab-icon { display: block; font-size: 20px; line-height: 1; }
+  .tab-label { font-size: 10px !important; letter-spacing: 0.04em; }
+
+  /* Room grid: single column on mobile */
+  .room-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Main content: pad bottom so tab bar doesn't overlap */
+  .main-content {
+    padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom) + 12px) !important;
+  }
+
+  /* Universal touch target floor */
+  button { min-height: 44px; }
+
+  /* Sliders: taller hit area for finger dragging */
+  input[type="range"] {
+    height: 28px !important;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: -11px;
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+  }
+
+  /* TAP button: wide and tall, centered below BPM display */
+  .tap-btn {
+    flex: 1 !important;
+    min-height: 64px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+    letter-spacing: 0.15em !important;
+  }
+}
