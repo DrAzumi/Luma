@@ -3,7 +3,11 @@
     "allow": [
       "Bash(node --check server/spotify.js)",
       "Bash(node --check server/index.js)",
-      "Bash(node --check server/bpmEngine.js)"
+      "Bash(node --check server/bpmEngine.js)",
+      "Bash(node *)",
+      "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\(p.get\\('type'\\), p.get\\('version'\\)\\)\")",
+      "Bash(python3 *)",
+      "Bash(/Users/ayansharma/anaconda3/bin/python3 *)"
     ]
   }
 }

@@ -8,3 +8,5 @@ tuya-raw.json
 tinytuya.json
 *.log
 .DS_Store
+.claude/
+settings.local.json
