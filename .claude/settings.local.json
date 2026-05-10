@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --check server/spotify.js)",
+      "Bash(node --check server/index.js)",
+      "Bash(node --check server/bpmEngine.js)"
+    ]
+  }
+}

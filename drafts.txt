@@ -1,0 +1,24 @@
+- Spotify api to check now playing in bpm mode. - API to fetch the bpm of now 
+playing song to set the bpm automatically ,
+   also add the edit bpm directly like an editable field and not just as a slider.
+- Have artist album based color paletes - Tame impala currents colors , TSR etc.   
+- will it be fine to keep it on the fly like the changes , user doesn't 
+  have to stop and then re start , it changes on the fly as the bpm changes 
+  , modes changs- also tell if pattern and brightness effect are clashing if so how
+ 	Like I kinda felt like the effect are overlapping or maybe I did not understand themc orrect - also what would be the best bpm to feel the actual effect and if so then would it make sense that we add the songs on half the temp - basically
+-  There are two more bulbs in my house , they are from philips - I am able to
+ contrl both of them from google home as well so can we connect them over luma as well? I don't connect them from smart life but google home is connected and so is their own wiz app. So I think they would be configurable. 
+- seems to be the case that the bedroom bulb is not following the pattern or brightness effect how the wm and hall bulbs are ,. room bulb seems to only loop throguh the color palette
+  
+
+
+cat server/index.js
+cat server/bpmEngine.js
+cat server/bulbs.js
+cat server/spotify.js
+cat server/lanDaemon.js
+cat server/lan_daemon.py
+
+
+{'ip_address': '192.168.1.2', 'mac_address': '9877d505010a'}
+{'ip_address': '192.168.1.6', 'mac_address': '9877d53d10a6'}

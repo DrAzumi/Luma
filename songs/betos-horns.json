@@ -1,0 +1,1328 @@
+{
+  "title": "Beto's Horns (fred remix)",
+  "artist": "Fred again.. / CA7RIEL & Paco Amoroso",
+  "duration": 227,
+  "bpm": 129.2,
+  "notes": "Beat-accurate counterpoint with RGB. Beat breathing on sub-bass thumps. Hall=Counter (warm amber/gold), Bedroom=Lead (cold blue/violet), WM=Pulse (deep red/crimson). All starts OFF. Hall wakes first, dies last.",
+  "cues": [
+    {
+      "time": 0,
+      "label": "init-all-off",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "power": false
+    },
+    {
+      "time": 4,
+      "label": "hall-first-breath",
+      "bulbs": ["hall"],
+      "power": true,
+      "brightness": 25,
+      "colorTemp": 80
+    },
+    {
+      "time": 14,
+      "label": "bedroom-ember",
+      "bulbs": ["bedroom"],
+      "power": true,
+      "brightness": 15,
+      "colorTemp": 60
+    },
+    {
+      "time": 26,
+      "label": "hall-swell-1",
+      "bulbs": ["hall"],
+      "brightness": 45,
+      "colorTemp": 100
+    },
+    {
+      "time": 33,
+      "label": "bedroom-recedes",
+      "bulbs": ["bedroom"],
+      "brightness": 10,
+      "colorTemp": 50
+    },
+    {
+      "time": 40,
+      "label": "hall-swell-2",
+      "bulbs": ["hall"],
+      "brightness": 75,
+      "colorTemp": 110
+    },
+    {
+      "time": 44,
+      "label": "wm-first-presence",
+      "bulbs": ["washingmachine"],
+      "power": true,
+      "brightness": 15,
+      "colorTemp": 50
+    },
+    {
+      "time": 50,
+      "label": "hall-peak-pre-arrival",
+      "bulbs": ["hall"],
+      "brightness": 100,
+      "colorTemp": 90
+    },
+    {
+      "time": 53,
+      "label": "all-hold-breath",
+      "bulbs": ["bedroom", "washingmachine"],
+      "brightness": 10,
+      "colorTemp": 50
+    },
+    {
+      "time": 54,
+      "label": "ARRIVAL-bedroom-slam",
+      "bulbs": ["bedroom"],
+      "brightness": 800,
+      "hue": 215,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 54.1,
+      "label": "ARRIVAL-hall-cut",
+      "bulbs": ["hall"],
+      "brightness": 35,
+      "colorTemp": 200
+    },
+    {
+      "time": 54.2,
+      "label": "ARRIVAL-wm-anchor",
+      "bulbs": ["washingmachine"],
+      "brightness": 380,
+      "hue": 28,
+      "saturation": 0.9,
+      "value": 1.0
+    },
+    {
+      "time": 60.16,
+      "label": "A-beat1-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 60.16,
+      "label": "A-beat1-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 700,
+      "hue": 220,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 60.16,
+      "label": "A-beat1-hall-dip",
+      "bulbs": ["hall"],
+      "brightness": 60,
+      "colorTemp": 150
+    },
+    {
+      "time": 61.5,
+      "label": "A-beat1-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 400,
+      "hue": 15,
+      "saturation": 0.8,
+      "value": 0.8
+    },
+    {
+      "time": 63.92,
+      "label": "A-beat2-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 950,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 63.92,
+      "label": "A-beat2-hall-spike",
+      "bulbs": ["hall"],
+      "brightness": 320,
+      "hue": 28,
+      "saturation": 0.85,
+      "value": 1.0
+    },
+    {
+      "time": 63.92,
+      "label": "A-beat2-bedroom-hold",
+      "bulbs": ["bedroom"],
+      "brightness": 580,
+      "hue": 220,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 65.0,
+      "label": "A-beat2-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 380,
+      "hue": 15,
+      "saturation": 0.8,
+      "value": 0.8
+    },
+    {
+      "time": 67.71,
+      "label": "A-beat3-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 850,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 67.71,
+      "label": "A-beat3-bedroom-dip",
+      "bulbs": ["bedroom"],
+      "brightness": 420,
+      "hue": 230,
+      "saturation": 0.65,
+      "value": 0.9
+    },
+    {
+      "time": 67.71,
+      "label": "A-beat3-hall-fill",
+      "bulbs": ["hall"],
+      "brightness": 420,
+      "hue": 28,
+      "saturation": 0.8,
+      "value": 1.0
+    },
+    {
+      "time": 69.0,
+      "label": "A-beat3-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 350,
+      "hue": 15,
+      "saturation": 0.75,
+      "value": 0.8
+    },
+    {
+      "time": 71.49,
+      "label": "A-beat4-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 980,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 71.49,
+      "label": "A-beat4-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 640,
+      "hue": 215,
+      "saturation": 0.65,
+      "value": 1.0
+    },
+    {
+      "time": 71.49,
+      "label": "A-beat4-hall-dip",
+      "bulbs": ["hall"],
+      "brightness": 80,
+      "colorTemp": 300
+    },
+    {
+      "time": 72.8,
+      "label": "A-beat4-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 420,
+      "hue": 20,
+      "saturation": 0.8,
+      "value": 0.8
+    },
+    {
+      "time": 75.28,
+      "label": "A-beat5-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 75.28,
+      "label": "A-beat5-bedroom-rise",
+      "bulbs": ["bedroom"],
+      "brightness": 720,
+      "hue": 210,
+      "saturation": 0.55,
+      "value": 1.0
+    },
+    {
+      "time": 75.28,
+      "label": "A-beat5-hall-dims",
+      "bulbs": ["hall"],
+      "brightness": 50,
+      "colorTemp": 200
+    },
+    {
+      "time": 76.5,
+      "label": "A-beat5-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 350,
+      "hue": 10,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 79.04,
+      "label": "A-beat6-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 950,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 79.04,
+      "label": "A-beat6-bedroom-peak",
+      "bulbs": ["bedroom"],
+      "brightness": 800,
+      "hue": 205,
+      "saturation": 0.5,
+      "value": 1.0
+    },
+    {
+      "time": 79.04,
+      "label": "A-beat6-hall-gone",
+      "bulbs": ["hall"],
+      "brightness": 30,
+      "colorTemp": 100
+    },
+    {
+      "time": 80.3,
+      "label": "A-beat6-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 400,
+      "hue": 15,
+      "saturation": 0.85,
+      "value": 0.9
+    },
+    {
+      "time": 83.06,
+      "label": "pre-hornA-converge",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 850,
+      "hue": 45,
+      "saturation": 0.4,
+      "value": 1.0
+    },
+    {
+      "time": 83.52,
+      "label": "HORNSTAB-A",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 84.5,
+      "label": "posthorn-A-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 750,
+      "colorTemp": 950
+    },
+    {
+      "time": 84.6,
+      "label": "posthorn-A-hall",
+      "bulbs": ["hall"],
+      "brightness": 600,
+      "hue": 45,
+      "saturation": 0.9,
+      "value": 1.0
+    },
+    {
+      "time": 84.8,
+      "label": "posthorn-A-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 200,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 0.8
+    },
+    {
+      "time": 85.89,
+      "label": "A-final-beat",
+      "bulbs": ["washingmachine"],
+      "brightness": 800,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 85.89,
+      "label": "A-final-beat-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 500,
+      "hue": 220,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 86.84,
+      "label": "DROP-A-all-cut",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 12,
+      "colorTemp": 80
+    },
+    {
+      "time": 89.19,
+      "label": "silence-hall-only",
+      "bulbs": ["hall"],
+      "brightness": 22,
+      "colorTemp": 60
+    },
+    {
+      "time": 89.3,
+      "label": "silence-bedroom-out",
+      "bulbs": ["bedroom"],
+      "brightness": 10,
+      "colorTemp": 50
+    },
+    {
+      "time": 89.4,
+      "label": "silence-wm-out",
+      "bulbs": ["washingmachine"],
+      "power": false
+    },
+    {
+      "time": 99.71,
+      "label": "silence-hall-inch-up",
+      "bulbs": ["hall"],
+      "brightness": 40,
+      "colorTemp": 70
+    },
+    {
+      "time": 101.1,
+      "label": "silence-bedroom-stir",
+      "bulbs": ["bedroom"],
+      "brightness": 12,
+      "colorTemp": 100
+    },
+    {
+      "time": 102.03,
+      "label": "B-first-beat-wm",
+      "bulbs": ["washingmachine"],
+      "power": true,
+      "brightness": 700,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 102.1,
+      "label": "B-bedroom-slams",
+      "bulbs": ["bedroom"],
+      "brightness": 750,
+      "hue": 270,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 102.2,
+      "label": "B-hall-drops",
+      "bulbs": ["hall"],
+      "brightness": 50,
+      "colorTemp": 300
+    },
+    {
+      "time": 103.44,
+      "label": "B-b1-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 950,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 103.44,
+      "label": "B-b1-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 680,
+      "hue": 265,
+      "saturation": 0.75,
+      "value": 1.0
+    },
+    {
+      "time": 103.44,
+      "label": "B-b1-hall",
+      "bulbs": ["hall"],
+      "brightness": 280,
+      "hue": 20,
+      "saturation": 0.85,
+      "value": 0.9
+    },
+    {
+      "time": 104.8,
+      "label": "B-b1-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 500,
+      "hue": 340,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 109.06,
+      "label": "B-b2-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 109.06,
+      "label": "B-b2-bedroom-dip",
+      "bulbs": ["bedroom"],
+      "brightness": 500,
+      "hue": 275,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 109.06,
+      "label": "B-b2-hall-spike",
+      "bulbs": ["hall"],
+      "brightness": 500,
+      "hue": 25,
+      "saturation": 0.9,
+      "value": 1.0
+    },
+    {
+      "time": 110.3,
+      "label": "B-b2-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 460,
+      "hue": 340,
+      "saturation": 0.9,
+      "value": 0.85
+    },
+    {
+      "time": 112.8,
+      "label": "B-b3-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 950,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 112.8,
+      "label": "B-b3-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 650,
+      "hue": 260,
+      "saturation": 0.65,
+      "value": 1.0
+    },
+    {
+      "time": 112.8,
+      "label": "B-b3-hall",
+      "bulbs": ["hall"],
+      "brightness": 350,
+      "hue": 30,
+      "saturation": 0.8,
+      "value": 0.95
+    },
+    {
+      "time": 113.27,
+      "label": "HORNSTAB-B1-bedroom-drops",
+      "bulbs": ["bedroom"],
+      "brightness": 100,
+      "hue": 240,
+      "saturation": 0.5,
+      "value": 0.5
+    },
+    {
+      "time": 113.27,
+      "label": "HORNSTAB-B1-hall-spike",
+      "bulbs": ["hall"],
+      "brightness": 1000,
+      "hue": 45,
+      "saturation": 0.8,
+      "value": 1.0
+    },
+    {
+      "time": 113.27,
+      "label": "HORNSTAB-B1-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 114.5,
+      "label": "postB1-bedroom-rises",
+      "bulbs": ["bedroom"],
+      "brightness": 620,
+      "hue": 265,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 114.6,
+      "label": "postB1-hall-drops",
+      "bulbs": ["hall"],
+      "brightness": 220,
+      "hue": 25,
+      "saturation": 0.8,
+      "value": 0.85
+    },
+    {
+      "time": 114.7,
+      "label": "postB1-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 480,
+      "hue": 350,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 116.56,
+      "label": "B-b4-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 116.56,
+      "label": "B-b4-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 600,
+      "hue": 270,
+      "saturation": 0.65,
+      "value": 1.0
+    },
+    {
+      "time": 116.56,
+      "label": "B-b4-hall",
+      "bulbs": ["hall"],
+      "brightness": 380,
+      "hue": 28,
+      "saturation": 0.85,
+      "value": 0.95
+    },
+    {
+      "time": 117.8,
+      "label": "B-b4-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 440,
+      "hue": 340,
+      "saturation": 0.85,
+      "value": 0.85
+    },
+    {
+      "time": 118.42,
+      "label": "HORNSTAB-B2-all",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 119.2,
+      "label": "postB2-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 220,
+      "hue": 250,
+      "saturation": 0.6,
+      "value": 0.8
+    },
+    {
+      "time": 119.3,
+      "label": "postB2-hall",
+      "bulbs": ["hall"],
+      "brightness": 680,
+      "hue": 40,
+      "saturation": 0.9,
+      "value": 1.0
+    },
+    {
+      "time": 119.4,
+      "label": "postB2-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 350,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 0.9
+    },
+    {
+      "time": 120.3,
+      "label": "PEAK-SUBBASS-B-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 1000,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 120.3,
+      "label": "PEAK-SUBBASS-B-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 800,
+      "hue": 260,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 120.3,
+      "label": "PEAK-SUBBASS-B-hall-drops",
+      "bulbs": ["hall"],
+      "brightness": 80,
+      "colorTemp": 400
+    },
+    {
+      "time": 121.5,
+      "label": "post-peak-breathe-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 500,
+      "hue": 340,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 121.5,
+      "label": "post-peak-hall-rises",
+      "bulbs": ["hall"],
+      "brightness": 350,
+      "hue": 30,
+      "saturation": 0.8,
+      "value": 0.9
+    },
+    {
+      "time": 124.04,
+      "label": "HORNSTAB-B4-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 1000,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 124.04,
+      "label": "HORNSTAB-B4-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 1000,
+      "hue": 200,
+      "saturation": 0.5,
+      "value": 1.0
+    },
+    {
+      "time": 124.04,
+      "label": "HORNSTAB-B4-hall",
+      "bulbs": ["hall"],
+      "brightness": 150,
+      "colorTemp": 200
+    },
+    {
+      "time": 124.53,
+      "label": "B4-scatter-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 100,
+      "colorTemp": 100
+    },
+    {
+      "time": 124.99,
+      "label": "B4-recovery",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 700,
+      "hue": 35,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 127.8,
+      "label": "B-final-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 950,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 127.8,
+      "label": "B-final-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 750,
+      "hue": 265,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 127.8,
+      "label": "B-final-hall",
+      "bulbs": ["hall"],
+      "brightness": 200,
+      "colorTemp": 300
+    },
+    {
+      "time": 129.0,
+      "label": "B-final-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 500,
+      "hue": 340,
+      "saturation": 0.85,
+      "value": 0.85
+    },
+    {
+      "time": 131.56,
+      "label": "B-last-beat",
+      "bulbs": ["washingmachine"],
+      "brightness": 800,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 131.56,
+      "label": "B-last-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 650,
+      "hue": 260,
+      "saturation": 0.65,
+      "value": 1.0
+    },
+    {
+      "time": 132.03,
+      "label": "BREAKDOWN-all-cut",
+      "bulbs": ["bedroom", "washingmachine"],
+      "brightness": 10,
+      "colorTemp": 100
+    },
+    {
+      "time": 132.1,
+      "label": "BREAKDOWN-wm-off",
+      "bulbs": ["washingmachine"],
+      "power": false
+    },
+    {
+      "time": 132.3,
+      "label": "BREAKDOWN-hall-ember",
+      "bulbs": ["hall"],
+      "brightness": 30,
+      "colorTemp": 55
+    },
+    {
+      "time": 132.4,
+      "label": "BREAKDOWN-bedroom-ember",
+      "bulbs": ["bedroom"],
+      "brightness": 12,
+      "colorTemp": 45
+    },
+    {
+      "time": 148.28,
+      "label": "breakdown-hall-dimmer",
+      "bulbs": ["hall"],
+      "brightness": 18,
+      "colorTemp": 48
+    },
+    {
+      "time": 160.4,
+      "label": "breakdown-bedroom-stir",
+      "bulbs": ["bedroom"],
+      "brightness": 18,
+      "colorTemp": 600
+    },
+    {
+      "time": 168.44,
+      "label": "breakdown-counter-starts",
+      "bulbs": ["bedroom"],
+      "brightness": 55,
+      "colorTemp": 750
+    },
+    {
+      "time": 168.5,
+      "label": "breakdown-hall-dims",
+      "bulbs": ["hall"],
+      "brightness": 12,
+      "colorTemp": 40
+    },
+    {
+      "time": 175.01,
+      "label": "breakdown-rebuild-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 90,
+      "colorTemp": 850
+    },
+    {
+      "time": 175.1,
+      "label": "breakdown-rebuild-hall",
+      "bulbs": ["hall"],
+      "brightness": 45,
+      "colorTemp": 120
+    },
+    {
+      "time": 185.43,
+      "label": "PRECLIMAX-wm-wakes",
+      "bulbs": ["washingmachine"],
+      "power": true,
+      "brightness": 200,
+      "hue": 300,
+      "saturation": 0.8,
+      "value": 0.8
+    },
+    {
+      "time": 185.43,
+      "label": "PRECLIMAX-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 400,
+      "hue": 200,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 185.43,
+      "label": "PRECLIMAX-hall",
+      "bulbs": ["hall"],
+      "brightness": 250,
+      "hue": 40,
+      "saturation": 0.7,
+      "value": 0.9
+    },
+    {
+      "time": 186.92,
+      "label": "PRECLIMAX-surge",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 700,
+      "hue": 220,
+      "saturation": 0.5,
+      "value": 1.0
+    },
+    {
+      "time": 187.76,
+      "label": "PRECLIMAX-final-push",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 900,
+      "colorTemp": 900
+    },
+    {
+      "time": 187.76,
+      "label": "CLIMAX-PEAK-1",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 188.29,
+      "label": "CLIMAX-PEAK-2",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 188.82,
+      "label": "CLIMAX-PEAK-3",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 189.31,
+      "label": "post-climax-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 850,
+      "hue": 200,
+      "saturation": 0.55,
+      "value": 1.0
+    },
+    {
+      "time": 189.4,
+      "label": "post-climax-hall-drops",
+      "bulbs": ["hall"],
+      "brightness": 120,
+      "colorTemp": 700
+    },
+    {
+      "time": 189.5,
+      "label": "post-climax-wm-warm",
+      "bulbs": ["washingmachine"],
+      "brightness": 750,
+      "hue": 15,
+      "saturation": 0.9,
+      "value": 1.0
+    },
+    {
+      "time": 194.19,
+      "label": "C-MEGABEAT-1-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 1000,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 194.19,
+      "label": "C-MEGABEAT-1-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 1000,
+      "hue": 195,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 194.19,
+      "label": "C-MEGABEAT-1-hall",
+      "bulbs": ["hall"],
+      "brightness": 80,
+      "colorTemp": 500
+    },
+    {
+      "time": 195.3,
+      "label": "C-beat1-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 550,
+      "hue": 340,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 195.3,
+      "label": "C-beat1-hall-rises",
+      "bulbs": ["hall"],
+      "brightness": 400,
+      "hue": 35,
+      "saturation": 0.85,
+      "value": 1.0
+    },
+    {
+      "time": 197.14,
+      "label": "C-beat2-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 197.14,
+      "label": "C-beat2-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 750,
+      "hue": 205,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 197.14,
+      "label": "C-beat2-hall-dip",
+      "bulbs": ["hall"],
+      "brightness": 150,
+      "colorTemp": 400
+    },
+    {
+      "time": 198.5,
+      "label": "C-beat2-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 500,
+      "hue": 330,
+      "saturation": 0.85,
+      "value": 0.85
+    },
+    {
+      "time": 200.62,
+      "label": "C-MEGABEAT-2",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "hue": 300,
+      "saturation": 0.7,
+      "value": 1.0
+    },
+    {
+      "time": 201.69,
+      "label": "C-ABSOLUTE-PEAK",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 202.11,
+      "label": "post-absolute-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 400,
+      "hue": 210,
+      "saturation": 0.6,
+      "value": 1.0
+    },
+    {
+      "time": 202.2,
+      "label": "post-absolute-hall",
+      "bulbs": ["hall"],
+      "brightness": 100,
+      "colorTemp": 300
+    },
+    {
+      "time": 202.3,
+      "label": "post-absolute-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 200,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 0.9
+    },
+    {
+      "time": 203.04,
+      "label": "C-hornbuild-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 700,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 203.04,
+      "label": "C-hornbuild-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 800,
+      "hue": 200,
+      "saturation": 0.55,
+      "value": 1.0
+    },
+    {
+      "time": 203.04,
+      "label": "C-hornbuild-hall",
+      "bulbs": ["hall"],
+      "brightness": 80,
+      "colorTemp": 200
+    },
+    {
+      "time": 204.1,
+      "label": "HORNSTAB-FINAL",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 1000,
+      "colorTemp": 1000
+    },
+    {
+      "time": 205.0,
+      "label": "postfinal-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 600,
+      "hue": 210,
+      "saturation": 0.5,
+      "value": 1.0
+    },
+    {
+      "time": 205.1,
+      "label": "postfinal-hall",
+      "bulbs": ["hall"],
+      "brightness": 450,
+      "hue": 35,
+      "saturation": 0.8,
+      "value": 1.0
+    },
+    {
+      "time": 205.2,
+      "label": "postfinal-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 400,
+      "hue": 345,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 207.59,
+      "label": "C-last-big-thump",
+      "bulbs": ["washingmachine"],
+      "brightness": 900,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 207.59,
+      "label": "C-last-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 700,
+      "hue": 205,
+      "saturation": 0.55,
+      "value": 1.0
+    },
+    {
+      "time": 207.59,
+      "label": "C-last-hall",
+      "bulbs": ["hall"],
+      "brightness": 200,
+      "colorTemp": 300
+    },
+    {
+      "time": 208.12,
+      "label": "C-rapid-1",
+      "bulbs": ["washingmachine", "bedroom"],
+      "brightness": 950,
+      "hue": 340,
+      "saturation": 0.95,
+      "value": 1.0
+    },
+    {
+      "time": 208.65,
+      "label": "C-rapid-1-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 600,
+      "hue": 320,
+      "saturation": 0.8,
+      "value": 0.9
+    },
+    {
+      "time": 209.19,
+      "label": "C-rapid-2",
+      "bulbs": ["washingmachine", "bedroom"],
+      "brightness": 950,
+      "hue": 355,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 209.72,
+      "label": "C-rapid-2-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 580,
+      "hue": 330,
+      "saturation": 0.8,
+      "value": 0.85
+    },
+    {
+      "time": 210.26,
+      "label": "C-rapid-3",
+      "bulbs": ["washingmachine", "bedroom"],
+      "brightness": 950,
+      "hue": 0,
+      "saturation": 1.0,
+      "value": 1.0
+    },
+    {
+      "time": 210.79,
+      "label": "C-rapid-3-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 550,
+      "hue": 320,
+      "saturation": 0.75,
+      "value": 0.8
+    },
+    {
+      "time": 211.23,
+      "label": "winddown-bedroom-fades",
+      "bulbs": ["bedroom"],
+      "brightness": 450,
+      "hue": 215,
+      "saturation": 0.4,
+      "value": 0.9
+    },
+    {
+      "time": 211.3,
+      "label": "winddown-hall-holds",
+      "bulbs": ["hall"],
+      "brightness": 500,
+      "hue": 30,
+      "saturation": 0.7,
+      "value": 0.9
+    },
+    {
+      "time": 211.4,
+      "label": "winddown-wm-dims",
+      "bulbs": ["washingmachine"],
+      "brightness": 280,
+      "hue": 330,
+      "saturation": 0.7,
+      "value": 0.75
+    },
+    {
+      "time": 214.27,
+      "label": "late-wind-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 250,
+      "colorTemp": 400
+    },
+    {
+      "time": 214.3,
+      "label": "late-wind-hall",
+      "bulbs": ["hall"],
+      "brightness": 380,
+      "hue": 25,
+      "saturation": 0.6,
+      "value": 0.8
+    },
+    {
+      "time": 214.4,
+      "label": "late-wind-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 120,
+      "colorTemp": 60
+    },
+    {
+      "time": 217.76,
+      "label": "late-thump-wm",
+      "bulbs": ["washingmachine"],
+      "brightness": 600,
+      "hue": 355,
+      "saturation": 0.9,
+      "value": 0.9
+    },
+    {
+      "time": 217.76,
+      "label": "late-thump-bedroom",
+      "bulbs": ["bedroom"],
+      "brightness": 400,
+      "hue": 215,
+      "saturation": 0.45,
+      "value": 0.85
+    },
+    {
+      "time": 218.5,
+      "label": "late-thump-breathe",
+      "bulbs": ["washingmachine"],
+      "brightness": 200,
+      "colorTemp": 80
+    },
+    {
+      "time": 219.31,
+      "label": "fade-1",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 120,
+      "colorTemp": 150
+    },
+    {
+      "time": 220.71,
+      "label": "fade-2",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 60,
+      "colorTemp": 100
+    },
+    {
+      "time": 221.77,
+      "label": "fade-3",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 30,
+      "colorTemp": 70
+    },
+    {
+      "time": 222.84,
+      "label": "fade-4",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "brightness": 15,
+      "colorTemp": 60
+    },
+    {
+      "time": 223.33,
+      "label": "hall-last-ember",
+      "bulbs": ["bedroom", "washingmachine"],
+      "brightness": 10,
+      "colorTemp": 50
+    },
+    {
+      "time": 223.5,
+      "label": "hall-last-ember-alone",
+      "bulbs": ["hall"],
+      "brightness": 18,
+      "colorTemp": 50
+    },
+    {
+      "time": 225.0,
+      "label": "END-all-off",
+      "bulbs": ["bedroom", "hall", "washingmachine"],
+      "power": false
+    }
+  ]
+}

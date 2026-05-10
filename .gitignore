@@ -1,0 +1,10 @@
+node_modules/
+client/node_modules/
+.env
+.spotify-tokens.json
+devices.json
+snapshot.json
+tuya-raw.json
+tinytuya.json
+*.log
+.DS_Store
