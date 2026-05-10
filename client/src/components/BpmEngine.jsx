@@ -97,6 +97,171 @@ const PALETTE_META = {
   },
 };
 
+// ── Colour helpers (module-level so PixelCanvas can share them) ──────────────
+
+function rgbToHsv(str) {
+  const m = str.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+  if (!m) return { h: 0, s: 0 };
+  let r = parseInt(m[1]) / 255, g = parseInt(m[2]) / 255, b = parseInt(m[3]) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+  }
+  return { h: Math.round(h * 360), s: Math.round((max === 0 ? 0 : d / max) * 1000) };
+}
+
+// Sample every 4th pixel of 64×64 data, bucket by hue, return 4 dominant rgb strings
+function extractDominantColors(data) {
+  const N = 36; // 10° per bucket
+  const buckets = Array.from({ length: N }, () => ({ count: 0, r: 0, g: 0, b: 0 }));
+
+  for (let y = 0; y < 64; y += 4) {
+    for (let x = 0; x < 64; x += 4) {
+      const i = (y * 64 + x) * 4;
+      const r = data[i], g = data[i + 1], b = data[i + 2];
+      const rf = r / 255, gf = g / 255, bf = b / 255;
+      const max = Math.max(rf, gf, bf), min = Math.min(rf, gf, bf);
+      if (max < 0.15 || (max - min) / (max || 1) < 0.15) continue; // skip dark/grey
+      let h = 0;
+      const d = max - min;
+      if (d !== 0) {
+        if (max === rf) h = ((gf - bf) / d + (gf < bf ? 6 : 0)) / 6;
+        else if (max === gf) h = ((bf - rf) / d + 2) / 6;
+        else h = ((rf - gf) / d + 4) / 6;
+      }
+      const bi = Math.floor(h * N) % N;
+      buckets[bi].count++; buckets[bi].r += r; buckets[bi].g += g; buckets[bi].b += b;
+    }
+  }
+
+  const ranked = buckets
+    .map((b, i) => ({ ...b, hue: (i / N) * 360 }))
+    .filter((b) => b.count > 0)
+    .sort((a, b) => b.count - a.count);
+
+  // Greedy pick: enforce ≥35° hue separation, then fill without constraint
+  const selected = [];
+  for (const band of ranked) {
+    if (selected.length >= 4) break;
+    const near = selected.some((s) => { const d = Math.abs(s.hue - band.hue); return Math.min(d, 360 - d) < 35; });
+    if (!near) selected.push(band);
+  }
+  for (const band of ranked) {
+    if (selected.length >= 4) break;
+    if (!selected.includes(band)) selected.push(band);
+  }
+
+  return selected.map((b) =>
+    `rgb(${Math.round(b.r / b.count)},${Math.round(b.g / b.count)},${Math.round(b.b / b.count)})`,
+  );
+}
+
+// ── Pixel art canvas preview ──────────────────────────────────────────────────
+
+function PixelCanvas({ imageUrl, onUsePalette }) {
+  const canvasRef = useRef(null);
+  const [diffused, setDiffused] = useState(false);
+  const [pixelColors, setPixelColors] = useState(null);
+
+  useEffect(() => {
+    if (!imageUrl) return;
+    setPixelColors(null);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      // 1. Render to 64×64 offscreen canvas with nearest-neighbour scaling
+      const off = document.createElement("canvas");
+      off.width = 64; off.height = 64;
+      const octx = off.getContext("2d");
+      octx.imageSmoothingEnabled = false;
+      octx.drawImage(img, 0, 0, 64, 64);
+      const { data } = octx.getImageData(0, 0, 64, 64);
+
+      // 2. Draw each 1×1 source pixel as a 3×3 block with 1px dark gap → 256×256 canvas
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      canvas.width = 256; canvas.height = 256;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#0a0a0b";
+      ctx.fillRect(0, 0, 256, 256);
+      for (let py = 0; py < 64; py++) {
+        for (let px = 0; px < 64; px++) {
+          const i = (py * 64 + px) * 4;
+          ctx.fillStyle = `rgb(${data[i]},${data[i + 1]},${data[i + 2]})`;
+          ctx.fillRect(px * 4, py * 4, 3, 3); // 3px cell + 1px implicit gap
+        }
+      }
+
+      // 3. Extract dominant palette from the pixel data
+      const colors = extractDominantColors(data);
+      setPixelColors(colors);
+    };
+    img.onerror = () => {};
+    img.src = imageUrl;
+  }, [imageUrl]);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: 192,
+          height: 192,
+          imageRendering: "pixelated",
+          borderRadius: 8,
+          border: "1px solid var(--border)",
+          filter: diffused ? "blur(2px)" : "none",
+          transition: "filter 0.25s",
+        }}
+      />
+
+      {/* Caption row */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
+        <span style={{ flex: 1, fontSize: 9, color: "var(--text3)", fontFamily: "'DM Mono',monospace" }}>
+          64×64 · LED matrix preview
+        </span>
+        <button
+          onClick={() => setDiffused((d) => !d)}
+          style={{
+            fontSize: 9, padding: "3px 8px", borderRadius: 4, cursor: "pointer",
+            fontFamily: "'DM Mono',monospace",
+            background: diffused ? "#f5c84220" : "var(--surface2)",
+            color: diffused ? "var(--accent)" : "var(--text3)",
+            border: diffused ? "1px solid #f5c84240" : "1px solid var(--border2)",
+          }}
+        >
+          {diffused ? "○ crisp" : "◉ diffused"}
+        </button>
+      </div>
+
+      {/* Dominant colour swatches + apply button */}
+      {pixelColors && (
+        <div style={{ display: "flex", gap: 6, alignItems: "center", width: "100%" }}>
+          <div style={{ display: "flex", gap: 3, flex: 1 }}>
+            {pixelColors.map((c, i) => (
+              <div key={i} style={{ flex: 1, height: 18, borderRadius: 4, background: c, border: "1px solid #ffffff14" }} />
+            ))}
+          </div>
+          <button
+            onClick={() => onUsePalette(pixelColors)}
+            style={{
+              fontSize: 9, padding: "3px 10px", borderRadius: 4, cursor: "pointer",
+              fontFamily: "'DM Mono',monospace", fontWeight: 700,
+              background: "var(--accent)", color: "#0a0a0b", border: "none",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Use as palette
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const PATTERNS = ["counterpoint", "unison", "chase", "split"];
 const PATTERN_DESC = {
   counterpoint: "WM vs Bedroom/Hall — opposite motion",
@@ -319,20 +484,6 @@ export default function BpmEngine() {
     setEditingBpm(false);
   };
 
-  const rgbToHsv = (str) => {
-    const m = str.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-    if (!m) return { h: 0, s: 0 };
-    let r = parseInt(m[1]) / 255, g = parseInt(m[2]) / 255, b = parseInt(m[3]) / 255;
-    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
-    let h = 0;
-    if (d !== 0) {
-      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
-      else if (max === g) h = ((b - r) / d + 2) / 6;
-      else h = ((r - g) / d + 4) / 6;
-    }
-    return { h: Math.round(h * 360), s: Math.round((max === 0 ? 0 : d / max) * 1000) };
-  };
-
   const openSpotify = () =>
     window.open(
       "http://localhost:3001/spotify/login",
@@ -436,6 +587,20 @@ export default function BpmEngine() {
 
         {spotify.connected && !spotify.track && (
           <div style={s.noTrack}>Play something in Spotify to sync</div>
+        )}
+
+        {/* Pixel art preview */}
+        {spotify.connected && spotify.track?.albumArtSm && (
+          <PixelCanvas
+            imageUrl={spotify.track.albumArtSm}
+            onUsePalette={(colors) => {
+              const pal = colors.map(rgbToHsv);
+              socket.emit("bpm:set-custom-palette", pal);
+              setPalette("custom");
+              setCustomPaletteLoaded(true);
+              setAlbumColors((prev) => ({ ...(prev || {}), colors }));
+            }}
+          />
         )}
 
         {/* Sync to Spotify — main CTA */}
