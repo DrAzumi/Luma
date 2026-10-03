@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUMA — Smart Lighting for Airbnb Hosts & Event Venues</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070709;
+      --surface: #121218;
+      --surface2: #191924;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 200, 66, 0.3);
+      --text: #f0f0f6;
+      --text2: #9292ab;
+      --accent: #f5c842;
+      --accent2: #f59e42;
+      --gradient-gold: linear-gradient(135deg, #f5c842, #f59e42);
+      --gradient-purple: linear-gradient(135deg, #a855f7, #6366f1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    .mono { font-family: 'DM Mono', monospace; }
+    .gradient-text {
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Header */
+    header {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { font-size: 26px; }
+    .logo-title { font-size: 24px; font-weight: 800; letter-spacing: 0.1em; color: var(--accent); }
+    .header-nav { display: flex; gap: 24px; align-items: center; }
+    .nav-link { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
+    .nav-link:hover { color: var(--text); }
+    
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-gold {
+      background: var(--gradient-gold);
+      color: #09090c;
+      box-shadow: 0 4px 20px rgba(245, 200, 66, 0.35);
+    }
+    .btn-gold:hover { box-shadow: 0 8px 30px rgba(245, 200, 66, 0.5); }
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .btn-glass:hover { border-color: rgba(255, 255, 255, 0.2); }
+    
+    /* Hero Section */
+    .hero {
+      padding: 90px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(245, 200, 66, 0.1);
+      border: 1px solid var(--border-accent);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+    .hero-h1 {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .hero-p {
+      font-size: 18px;
+      color: var(--text2);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+    .hero-cta { display: flex; gap: 16px; justify-content: center; align-items: center; }
+    
+    /* Feature Grid */
+    .section-title { text-align: center; margin: 80px 0 48px; }
+    .section-title h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+    .section-title p { color: var(--text2); font-size: 16px; }
+    
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.18); }
+    .card-icon { font-size: 36px; margin-bottom: 20px; display: inline-block; }
+    .card-h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .card-p { color: var(--text2); font-size: 14px; }
+    
+    /* Host Calculator */
+    .calc-box {
+      background: var(--surface2);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin: 60px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .calc-box { grid-template-columns: 1fr; } }
+    
+    .calc-stat { text-align: center; background: rgba(0,0,0,0.3); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .calc-stat-num { font-size: 48px; font-weight: 800; color: var(--accent); }
+    .calc-stat-label { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; }
+    
+    /* Pricing */
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+    }
+    .price-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(245, 200, 66, 0.15);
+    }
+    .price-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-gold);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.1em;
+    }
+    .price-num { font-size: 42px; font-weight: 800; margin: 16px 0 8px; }
+    
+    /* Footer */
+    footer { padding: 60px 0; border-top: 1px solid var(--border); margin-top: 100px; text-align: center; color: var(--text2); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/landing" class="logo-wrap">
+        <span class="logo-icon">🌕</span>
+        <span class="logo-title">LUMA</span>
+      </a>
+      <div class="header-nav">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#roi" class="nav-link">Host Calculator</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="/" class="btn btn-gold">Launch App Demo</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-badge mono">✨ AMBIANCE AS A SERVICE FOR HOSTS & VENUES</div>
+      <h1 class="hero-h1">Turn Any Space Into an <br/><span class="gradient-text">Immersive Lighting Experience</span></h1>
+      <p class="hero-p">
+        LUMA syncs local smart lights to Spotify BPM, powers pre-choreographed song shows, 
+        and gives guests intuitive one-tap scene presets. Boost 5-star reviews and host unforgettable parties.
+      </p>
+      <div class="hero-cta">
+        <a href="/" class="btn btn-gold">Try Interactive Demo</a>
+        <a href="#roi" class="btn btn-glass">Calculate Host ROI</a>
+      </div>
+    </section>
+
+    <div class="section-title" id="features">
+      <h2>Built for Seamless Guest Delight</h2>
+      <p>Zero technical hassle for hosts. Complete atmosphere control for guests.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="card-icon">♩</span>
+        <h3 class="card-h3">Spotify BPM Sync</h3>
+        <p class="card-p">Automatically detects currently playing Spotify tracks, extracts album art color palettes, and pulses lights in real-time tempo.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎉</span>
+        <h3 class="card-h3">Guest VJ Touch Controller</h3>
+        <p class="card-p">Give party guests a PIN-optional mobile interface to tap tempo, trigger scenes, or select lighting palettes without touching admin settings.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏠</span>
+        <h3 class="card-h3">Multi-Property Management</h3>
+        <p class="card-p">Switch seamlessly between properties (Beach Villa, Downtown Loft, Studio) with customized room layouts and bulb groups.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎵</span>
+        <h3 class="card-h3">Song Choreography Engine</h3>
+        <p class="card-p">Pre-choreographed timestamped cues (like Beto's Horns) for epic drops, horn stabs, and dynamic lighting counterpoints.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">✨</span>
+        <h3 class="card-h3">One-Tap Ambiance Scenes</h3>
+        <p class="card-p">Focus, Relax, Bedtime, 30-minute Sleep Fade, Movie, and DJ Strobe presets instantly set the mood across all rooms.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">👾</span>
+        <h3 class="card-h3">Zero-Friction Onboarding</h3>
+        <p class="card-p">Works out of the box with Tuya & Philips WiZ bulbs over LAN. Includes sandbox simulation mode for instant previewing.</p>
+      </div>
+    </div>
+
+    <div class="calc-box" id="roi">
+      <div>
+        <span class="hero-badge mono">HOST REVENUE CALCULATOR</span>
+        <h3 style="font-size: 28px; font-weight: 800; margin: 12px 0;">How LUMA Drives Airbnb Revenue</h3>
+        <p style="color: var(--text2); font-size: 15px; margin-bottom: 20px;">
+          Short-term rental guests pay a premium for unique, memorable ambiance. Properties with smart music lighting rank higher in reviews and photo appeal.
+        </p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="calc-stat">
+          <div class="calc-stat-num">+0.4 ★</div>
+          <div class="calc-stat-label">Average Review Score Lift</div>
+        </div>
+        <div class="calc-stat">
+          <div class="calc-stat-num">$2,400+</div>
+          <div class="calc-stat-label">Estimated Annual Revenue Lift / Property</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" id="pricing">
+      <h2>Simple, Host-Friendly Pricing</h2>
+      <p>Start free on your local network or upgrade for cloud backup & multi-property hosting.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="price-card">
+        <h3 style="font-size: 20px;">Self-Hosted</h3>
+        <div class="price-num">$0</div>
+        <p style="color: var(--text2); font-size: 13px; margin-bottom: 24px;">For hobbyists & single venue setups</p>
+        <a href="/" class="btn btn-glass" style="width: 100%;">Get Started Free</a>
+      </div>
+      <div class="price-card popular">
+        <div class="price-badge">MOST POPULAR</div>
+        <h3 style="font-size: 20px;">Superhost Pro</h3>
+        <div class="price-num"><span class="gradient-text">$19</span><span style="font-size: 14px; color: var(--text2);">/mo</span></div>
+        <p style="color: var(--text2); font-size: 13px; margin-bottom: 24px;">For Airbnb & VRBO hosts</p>
+        <a href="/" class="btn btn-gold" style="width: 100%;">Start 14-Day Trial</a>
+      </div>
+      <div class="price-card">
+        <h3 style="font-size: 20px;">Event Venue</h3>
+        <div class="price-num">$49<span style="font-size: 14px; color: var(--text2);">/mo</span></div>
+        <p style="color: var(--text2); font-size: 13px; margin-bottom: 24px;">For nightclubs, event spaces & DJ booths</p>
+        <a href="/" class="btn btn-glass" style="width: 100%;">Contact Sales</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 LUMA Technologies. Built for smart-home ambiance & house party creators.</p>
+    </footer>
+  </div>
+</body>
+</html>

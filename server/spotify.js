@@ -138,7 +138,7 @@ async function getDeezerBpm(trackName, artist) {
     }
   }
 
-  console.log(`[Deezer] no BPM found for "${trackName}" — Deezer data may be sparse for this track`);
+  console.log('[Deezer] no BPM found for "' + trackName + '" - Deezer data may be sparse for this track');
   return null;
 }
 
@@ -289,7 +289,7 @@ async function getAudioFeatures(trackId, trackName, artistName) {
       if (!mbid) {
         console.log(`[BPM] MusicBrainz: no recording found for ISRC ${isrc}`);
       } else {
-        console.log(`[BPM] MusicBrainz MBID: ${mbid} — querying AcousticBrainz`);
+        console.log('[BPM] MusicBrainz MBID: ' + mbid + ' - querying AcousticBrainz');
         const ab = await httpGet(`https://acousticbrainz.org/api/v1/${mbid}/low-level`);
         const abBpm = ab?.rhythm?.bpm;
         if (abBpm > 0) {
@@ -303,28 +303,41 @@ async function getAudioFeatures(trackId, trackName, artistName) {
     }
   }
 
-  console.log(`[BPM] All sources exhausted for "${trackName}". Fix: enable Extended Quota Mode at developer.spotify.com`);
+  console.log('[BPM] All sources exhausted for "' + trackName + '". Fix: enable Extended Quota Mode at developer.spotify.com');
   return null;
 }
 
-let pollInterval = null;
+let pollTimeout = null;
 let lastTrackId = null;
 let cachedTrack = null;
 let cachedFeatures = null;
+let _pollBackoff = 8000;
+const POLL_BASE = 8000;
+const POLL_MAX  = 120000;
 
 function startPolling(io, bpmEngine) {
-  if (pollInterval) clearInterval(pollInterval);
+  stopPolling();
+  _pollBackoff = POLL_BASE;
+  _schedulePoll(io, bpmEngine, 0);
+}
 
-  // Poll immediately on start
-  doPoll(io, bpmEngine);
-
-  pollInterval = setInterval(() => doPoll(io, bpmEngine), 8000);
+function _schedulePoll(io, bpmEngine, delay) {
+  pollTimeout = setTimeout(async () => {
+    if (pollTimeout === null) return;
+    const netErr = await doPoll(io, bpmEngine);
+    if (netErr) {
+      _pollBackoff = Math.min(_pollBackoff * 2, POLL_MAX);
+    } else {
+      _pollBackoff = POLL_BASE;
+    }
+    _schedulePoll(io, bpmEngine, _pollBackoff);
+  }, delay);
 }
 
 async function doPoll(io, bpmEngine) {
   try {
     const track = await getNowPlaying();
-    if (!track) return;
+    if (!track) return false;
     cachedTrack = track;
     io.emit("spotify:nowplaying", track);
 
@@ -334,30 +347,35 @@ async function doPoll(io, bpmEngine) {
       if (features && features.bpm) {
         cachedFeatures = features;
         io.emit("spotify:features", features);
-        console.log(`[Spotify] "${track.name}" — ${features.bpm} BPM`);
+        console.log('[Spotify] "' + track.name + '" - ' + features.bpm + ' BPM');
         if (bpmEngine.isRunning()) bpmEngine.update({ bpm: features.bpm }, io);
       } else {
         cachedFeatures = null;
         io.emit("spotify:no-features", {});
       }
     }
+    return false;
   } catch (e) {
     if (e.message === "Unauthorized") {
-      try {
-        await refreshToken();
-      } catch (re) {
-        console.log("[Spotify] Token refresh failed");
-      }
-    } else if (e.message !== "Not authenticated") {
+      try { await refreshToken(); } catch {}
+      return false;
+    }
+    if (e.message === "Not authenticated") return false;
+    const isNetErr = !e.message || /ENOTFOUND|ETIMEDOUT|ECONNRESET|ECONNREFUSED/.test(e.message);
+    if (isNetErr) {
+      const nextSec = Math.min(_pollBackoff * 2, POLL_MAX) / 1000;
+      console.log('[Spotify] Network unavailable - retrying in ' + nextSec + 's');
+    } else {
       console.log("[Spotify] Poll error:", e.message);
     }
+    return isNetErr;
   }
 }
 
 function stopPolling() {
-  if (pollInterval) {
-    clearInterval(pollInterval);
-    pollInterval = null;
+  if (pollTimeout) {
+    clearTimeout(pollTimeout);
+    pollTimeout = null;
   }
   lastTrackId = null;
   cachedTrack = null;

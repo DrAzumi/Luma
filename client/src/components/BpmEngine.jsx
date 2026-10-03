@@ -277,6 +277,7 @@ const EFFECTS = [
   { id: "strobe", label: "Strobe", desc: "Hard alternating flash" },
   { id: "chase", label: "Chase", desc: "Brightness sweeps across" },
   { id: "ripple", label: "Ripple", desc: "Wave rolls across 3 bulbs" },
+  { id: "strobeWhite", label: "Strobe White", desc: "Blinding white flash + full blackout" },
 ];
 
 export default function BpmEngine() {
@@ -457,6 +458,17 @@ export default function BpmEngine() {
       colorShift,
     };
     if (running) socket.emit("bpm:update", cfg);
+  };
+
+  const isDjActive = running && effect === "strobeWhite";
+
+  const startDjStrobe = () => {
+    setSpotifySync(false);
+    setEffect("strobeWhite");
+    setIntensity(1);
+    const cfg = { ...getConfig(), effect: "strobeWhite", intensity: 1 };
+    if (running) socket.emit("bpm:update", cfg);
+    else socket.emit("bpm:start", cfg);
   };
 
   const tap = () => {
@@ -659,6 +671,40 @@ export default function BpmEngine() {
             BPM + album colors auto-follow each song
           </div>
         )}
+      </div>
+
+      {/* DJ Mode — locked tempo, hard white strobe for live sets */}
+      <div style={{ ...s.section, ...s.djSection, borderColor: isDjActive ? "#ffffff" : "var(--border)" }}>
+        <div style={s.djHeader}>
+          <div style={s.label}>DJ MODE</div>
+          {isDjActive && <span style={s.djLiveTag}>● LIVE · beat {beat}</span>}
+        </div>
+        <div style={s.djSub}>
+          Fixed tempo for the whole set — no Spotify auto-follow. Hard white flash + full blackout on every beat.
+        </div>
+        <div style={s.bpmRow}>
+          <div style={s.bpmDisplay}>
+            <span style={s.bpmNum}>{bpm}</span>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <span style={s.bpmUnit}>BPM</span>
+              <span style={s.bpmMs}>locked</span>
+            </div>
+          </div>
+          <button onClick={tap} className="tap-btn" style={s.tapBtn}>
+            TAP
+          </button>
+        </div>
+        <button
+          onClick={() => (isDjActive ? socket.emit("bpm:stop") : startDjStrobe())}
+          style={{
+            ...s.mainBtn,
+            background: isDjActive ? "#ff4d6d18" : "#ffffff",
+            color: isDjActive ? "#ff4d6d" : "#0a0a0b",
+            border: isDjActive ? "1px solid #ff4d6d" : "none",
+          }}
+        >
+          {isDjActive ? "■ Stop DJ Strobe" : `⚡ Start DJ Strobe · ${bpm} BPM`}
+        </button>
       </div>
 
       {/* Presets */}
@@ -954,7 +1000,7 @@ export default function BpmEngine() {
         onClick={startStop}
         style={{
           ...s.mainBtn,
-          background: running ? "#ff4d6d18" : "var(--accent)",
+          background: running ? "#ff4d6d18" : "var(--gradient-gold)",
           color: running ? "#ff4d6d" : "#0a0a0b",
           border: running ? "1px solid #ff4d6d" : "none",
         }}
@@ -1112,6 +1158,27 @@ const s = {
     letterSpacing: "0.08em",
     marginBottom: 6,
   },
+  djSection: {
+    border: "1px solid",
+    borderRadius: "var(--radius)",
+    padding: 16,
+    background: "var(--surface)",
+    transition: "border-color 0.3s",
+  },
+  djHeader: { display: "flex", alignItems: "center", justifyContent: "space-between" },
+  djLiveTag: {
+    fontSize: 10,
+    color: "#ffffff",
+    fontFamily: "'DM Mono',monospace",
+    fontWeight: 700,
+    letterSpacing: "0.06em",
+  },
+  djSub: {
+    fontSize: 11,
+    color: "var(--text3)",
+    fontFamily: "'DM Mono',monospace",
+    lineHeight: 1.5,
+  },
   presetGrid: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 },
   presetBtn: {
     display: "flex",
@@ -1252,6 +1319,7 @@ const s = {
     letterSpacing: "0.06em",
     cursor: "pointer",
     transition: "all 0.2s",
+    boxShadow: "0 4px 16px rgba(245, 200, 66, 0.15)",
   },
   liveInfo: {
     textAlign: "center",

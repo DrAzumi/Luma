@@ -1,8 +1,17 @@
-import sys, json, argparse, tinytuya
+import sys, os, json, argparse, tinytuya
+
+# Tuya bulbs come from bulbs-config.json (shared with the Node server)
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "..", "bulbs-config.json")
+try:
+    with open(CONFIG_FILE) as f:
+        _data = json.load(f)
+    _all = _data if isinstance(_data, list) else _data.get("bulbs", [])
+except Exception:
+    _all = []
 BULBS = {
-    'bedroom':        {'id': 'd7e7212acc0425c719jhzh', 'key': 'YcWq_Bq2&=W7[aOh',  'ip': '192.168.1.5'},
-    'hall':           {'id': 'd779f624e271236eeeiogr', 'key': '[d;/L.EBXQ@?&b_6',  'ip': '192.168.1.16'},
-    'washingmachine': {'id': 'd75d679deb6e48e3c6ylwa', 'key': 'JmPNyLh+Huf>_>Is',  'ip': '192.168.1.4'},
+    b["id"]: {"id": b["deviceId"], "key": b.get("localKey", ""), "ip": b["ip"],
+              "version": float(b.get("version") or 3.5)}
+    for b in _all if b.get("protocol", "tuya") == "tuya"
 }
 parser = argparse.ArgumentParser()
 parser.add_argument('bulb_id')
@@ -16,7 +25,7 @@ args = parser.parse_args()
 cfg = BULBS.get(args.bulb_id)
 if not cfg:
     sys.exit(1)
-d = tinytuya.BulbDevice(dev_id=cfg['id'], address=cfg['ip'], local_key=cfg['key'], version=3.5)
+d = tinytuya.BulbDevice(dev_id=cfg['id'], address=cfg['ip'], local_key=cfg['key'], version=cfg['version'])
 d.set_socketTimeout(1.5)
 d.set_socketRetryLimit(1)
 dps = {}

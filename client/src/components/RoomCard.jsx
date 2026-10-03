@@ -20,50 +20,50 @@ export default function RoomCard({ id, meta, state, onChange }) {
   const brightness = state.brightness ?? 500;
   const colorTemp = state.colorTemp ?? 500;
   const power = state.power ?? false;
-  const online = state.online ?? false;
+  const online = state.online ?? true;
   const mode = state.mode ?? "white";
   const color = state.color;
 
-  // Orb color
   let orbColor;
   if (!power) {
-    orbColor = "#1e1e26";
+    orbColor = "#181820";
   } else if (mode === "colour" && color) {
-    orbColor = `hsl(${color.h}, ${color.s / 10}%, ${20 + (color.v / 1000) * 50}%)`;
+    orbColor = `hsl(${color.h}, ${color.s / 10}%, ${20 + (color.v / 1000) * 55}%)`;
   } else {
-    const warm = 30 + (colorTemp / 1000) * 30;
-    const sat = 80 - (colorTemp / 1000) * 30;
-    const light = 20 + (brightness / 1000) * 45;
+    const warm = 35 - (colorTemp / 1000) * 20;
+    const sat = 90 - (colorTemp / 1000) * 40;
+    const light = 25 + (brightness / 1000) * 50;
     orbColor = `hsl(${warm}, ${sat}%, ${light}%)`;
   }
 
-  const glowSize = power ? 40 + (brightness / 1000) * 60 : 0;
+  const glowSize = power ? 20 + (brightness / 1000) * 40 : 0;
 
   return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
+      className="glass-card"
       style={{
         ...s.card,
-        borderColor: power ? "#2e2e38" : "#222228",
+        borderColor: power ? "rgba(245, 200, 66, 0.25)" : "var(--border)",
         background: power
-          ? `linear-gradient(135deg, #111113 60%, ${orbColor}18)`
-          : "#111113",
+          ? `linear-gradient(135deg, rgba(18,18,24,0.9) 50%, ${orbColor}15)`
+          : "rgba(18,18,24,0.7)",
       }}
     >
       {/* Header */}
       <div style={s.cardTop}>
         <div style={s.roomInfo}>
-          <span style={s.icon}>{meta.icon}</span>
+          <span style={s.icon}>{meta.icon || "💡"}</span>
           <div>
             <div style={s.roomName}>{meta.label}</div>
             <div style={s.statusRow}>
               <span
-                style={{ ...s.dot, background: online ? "#3ddc84" : "#ff4d6d" }}
+                style={{ ...s.dot, background: online ? "var(--online)" : "var(--offline)" }}
               />
-              <span style={s.statusText}>
-                {online ? "online" : "offline"} · {id}
+              <span style={s.statusText} className="mono">
+                {online ? "active" : "offline"} · {id}
               </span>
             </div>
           </div>
@@ -71,21 +71,22 @@ export default function RoomCard({ id, meta, state, onChange }) {
         <button
           onClick={() => onChange({ power: !power })}
           style={{ ...s.powerBtn, ...(power ? s.powerOn : {}) }}
+          className="btn-touch"
         >
           ⏻
         </button>
       </div>
 
-      {/* Orb */}
+      {/* Glowing Orb */}
       <div style={s.orbWrap}>
         <motion.div
           animate={{
-            width: power ? 72 + (brightness / 1000) * 32 : 40,
-            height: power ? 72 + (brightness / 1000) * 32 : 40,
+            width: power ? 68 + (brightness / 1000) * 28 : 40,
+            height: power ? 68 + (brightness / 1000) * 28 : 40,
             background: orbColor,
-            boxShadow: power ? `0 0 ${glowSize}px ${orbColor}88` : "none",
+            boxShadow: power ? `0 0 ${glowSize}px ${orbColor}` : "none",
           }}
-          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+          transition={{ type: "spring", stiffness: 120, damping: 18 }}
           style={s.orb}
         />
       </div>
@@ -94,36 +95,49 @@ export default function RoomCard({ id, meta, state, onChange }) {
       <AnimatePresence>
         {power && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             style={s.controls}
           >
             {/* Brightness */}
             <div style={s.sliderRow}>
               <span style={s.sliderLabel}>☀ Brightness</span>
-              <span style={s.sliderValue}>{Math.round(brightness / 10)}%</span>
+              <span style={s.sliderValue} className="mono">{Math.round(brightness / 10)}%</span>
             </div>
             <input
               type="range"
               min={10}
               max={1000}
               value={brightness}
-              style={s.slider}
               onChange={(e) => onChange({ brightness: Number(e.target.value) })}
             />
 
-            {/* Color temp (only in white mode) */}
+            {/* Quick Brightness Presets */}
+            <div style={s.presetRow}>
+              {[25, 50, 75, 100].map(pct => (
+                <button
+                  key={pct}
+                  onClick={() => onChange({ brightness: pct * 10 })}
+                  style={{
+                    ...s.presetBtn,
+                    borderColor: Math.round(brightness / 10) === pct ? 'var(--accent)' : 'var(--border2)',
+                    color: Math.round(brightness / 10) === pct ? 'var(--accent)' : 'var(--text2)',
+                  }}
+                  className="mono"
+                >
+                  {pct}%
+                </button>
+              ))}
+            </div>
+
+            {/* Color temp */}
             {mode !== "colour" && (
               <>
                 <div style={s.sliderRow}>
-                  <span style={s.sliderLabel}>◑ Warmth</span>
-                  <span style={s.sliderValue}>
-                    {colorTemp < 400
-                      ? "Warm"
-                      : colorTemp < 700
-                        ? "Neutral"
-                        : "Cool"}
+                  <span style={s.sliderLabel}>◑ Color Temp</span>
+                  <span style={s.sliderValue} className="mono">
+                    {colorTemp < 350 ? "Warm Amber" : colorTemp < 700 ? "Natural White" : "Cool Daylight"}
                   </span>
                 </div>
                 <input
@@ -132,12 +146,9 @@ export default function RoomCard({ id, meta, state, onChange }) {
                   max={1000}
                   value={colorTemp}
                   style={{
-                    ...s.slider,
-                    background: "linear-gradient(to right, #ff9f43, #f8f8ff)",
+                    background: "linear-gradient(to right, #ff9f43, #f8f8ff, #70a1ff)",
                   }}
-                  onChange={(e) =>
-                    onChange({ colorTemp: Number(e.target.value) })
-                  }
+                  onChange={(e) => onChange({ colorTemp: Number(e.target.value) })}
                 />
               </>
             )}
@@ -146,18 +157,19 @@ export default function RoomCard({ id, meta, state, onChange }) {
             <button
               onClick={() => setShowColors((v) => !v)}
               style={s.colorToggle}
+              className="btn-touch"
             >
-              🎨 {showColors ? "Hide Colors" : "Color Mode"}
+              <span>🎨 {showColors ? "Hide Color Swatches" : "Color Palette"}</span>
               {mode === "colour" && <span style={s.activePip} />}
             </button>
 
-            {/* Color swatches */}
+            {/* Swatches */}
             <AnimatePresence>
               {showColors && (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
                   style={s.swatchGrid}
                 >
                   {COLORS.map((c) => (
@@ -175,12 +187,8 @@ export default function RoomCard({ id, meta, state, onChange }) {
                       style={{
                         ...s.swatch,
                         background: c.hex,
-                        border:
-                          mode === "colour" &&
-                          color &&
-                          Math.abs(color.h - c.h) < 10
-                            ? "2px solid white"
-                            : "2px solid transparent",
+                        boxShadow: mode === "colour" && color && Math.abs(color.h - c.h) < 10 ? `0 0 12px ${c.hex}` : "none",
+                        border: mode === "colour" && color && Math.abs(color.h - c.h) < 10 ? "2px solid #ffffff" : "2px solid transparent",
                       }}
                     />
                   ))}
@@ -193,7 +201,7 @@ export default function RoomCard({ id, meta, state, onChange }) {
 
       {!power && (
         <div style={s.offState}>
-          <span style={s.offText}>Off</span>
+          <span style={s.offText} className="mono">STANDBY</span>
         </div>
       )}
     </motion.div>
@@ -202,14 +210,12 @@ export default function RoomCard({ id, meta, state, onChange }) {
 
 const s = {
   card: {
-    borderRadius: 14,
-    border: "1px solid",
     padding: 20,
     display: "flex",
     flexDirection: "column",
     gap: 14,
     minHeight: 240,
-    transition: "border-color 0.3s, background 0.5s",
+    position: "relative",
   },
   cardTop: {
     display: "flex",
@@ -218,105 +224,103 @@ const s = {
   },
   roomInfo: { display: "flex", alignItems: "center", gap: 12 },
   icon: { fontSize: 28 },
-  roomName: { fontSize: 15, fontWeight: 700, color: "#e8e8ee" },
-  statusRow: { display: "flex", alignItems: "center", gap: 5, marginTop: 3 },
-  dot: { width: 5, height: 5, borderRadius: "50%" },
+  roomName: { fontSize: 16, fontWeight: 700, color: "var(--text)" },
+  statusRow: { display: "flex", alignItems: "center", gap: 6, marginTop: 4 },
+  dot: { width: 6, height: 6, borderRadius: "50%" },
   statusText: {
     fontSize: 10,
-    color: "#44445a",
-    fontFamily: "'DM Mono',monospace",
+    color: "var(--text2)",
+    letterSpacing: "0.05em",
   },
   powerBtn: {
-    width: 36,
-    height: 36,
+    width: 40,
+    height: 40,
     borderRadius: "50%",
-    background: "#18181c",
-    border: "1px solid #2e2e38",
-    color: "#8888a0",
-    fontSize: 14,
+    background: "var(--surface2)",
+    border: "1px solid var(--border2)",
+    color: "var(--text2)",
+    fontSize: 16,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    transition: "all 0.2s",
-    cursor: "pointer",
+    transition: "all 0.2s ease",
   },
   powerOn: {
-    background: "#f5c842",
-    border: "1px solid #f5c842",
+    background: "var(--gradient-gold)",
+    border: "1px solid var(--accent)",
     color: "#0a0a0b",
+    boxShadow: "var(--glow-gold)",
   },
   orbWrap: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: 80,
+    minHeight: 90,
   },
   orb: { borderRadius: "50%" },
-  controls: { display: "flex", flexDirection: "column", gap: 8 },
-  sliderRow: { display: "flex", justifyContent: "space-between" },
+  controls: { display: "flex", flexDirection: "column", gap: 10 },
+  sliderRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
   sliderLabel: {
     fontSize: 11,
-    color: "#8888a0",
-    fontFamily: "'DM Mono',monospace",
+    color: "var(--text2)",
+    fontWeight: 600,
   },
   sliderValue: {
     fontSize: 11,
-    color: "#44445a",
-    fontFamily: "'DM Mono',monospace",
+    color: "var(--accent)",
+    fontWeight: 600,
   },
-  slider: {
-    width: "100%",
-    appearance: "none",
-    height: 3,
-    borderRadius: 2,
-    background: "#2e2e38",
+  presetRow: { display: "flex", gap: 6, marginTop: -2 },
+  presetBtn: {
+    flex: 1,
+    padding: "4px 0",
+    borderRadius: "var(--radius-xs)",
+    background: "var(--surface2)",
+    border: "1px solid var(--border2)",
+    fontSize: 10,
     cursor: "pointer",
   },
   colorToggle: {
     display: "flex",
     alignItems: "center",
-    gap: 6,
-    padding: "6px 10px",
-    borderRadius: 8,
-    background: "#18181c",
-    border: "1px solid #2e2e38",
-    color: "#8888a0",
-    fontSize: 11,
-    fontFamily: "'DM Mono',monospace",
-    cursor: "pointer",
-    position: "relative",
+    justifyContent: "space-between",
+    padding: "8px 12px",
+    borderRadius: "var(--radius-sm)",
+    background: "var(--surface2)",
+    border: "1px solid var(--border2)",
+    color: "var(--text)",
+    fontSize: 12,
+    marginTop: 4,
   },
   activePip: {
-    width: 6,
-    height: 6,
+    width: 8,
+    height: 8,
     borderRadius: "50%",
-    background: "#f5c842",
-    marginLeft: "auto",
+    background: "var(--accent)",
   },
   swatchGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
-    gap: 6,
-    overflow: "hidden",
+    gap: 8,
+    marginTop: 4,
   },
   swatch: {
     width: "100%",
     aspectRatio: "1",
-    borderRadius: 6,
+    borderRadius: "var(--radius-xs)",
     cursor: "pointer",
-    transition: "transform 0.1s",
-    border: "2px solid transparent",
+    transition: "transform 0.15s ease",
   },
   offState: {
     flex: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 12,
   },
   offText: {
-    fontSize: 12,
-    color: "#44445a",
-    fontFamily: "'DM Mono',monospace",
-    letterSpacing: "0.1em",
+    fontSize: 11,
+    color: "var(--text3)",
+    letterSpacing: "0.15em",
   },
 };

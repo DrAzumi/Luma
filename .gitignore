@@ -10,3 +10,10 @@ tinytuya.json
 .DS_Store
 .claude/
 settings.local.json
+
+# Per-install bulb config (holds local keys)
+bulbs-config.json
+# Build output and personal notes (docs/ and context.md contain keys)
+client/dist/
+docs/
+context.md

@@ -4,8 +4,34 @@
 //  commands via stdin. Zero per-command overhead.
 // ─────────────────────────────────────────────
 
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 const path = require("path");
+const fs = require("fs");
+
+// Detect which Python has the required packages
+function findPython() {
+  const candidates = [
+    "/Users/ayansharma/anaconda3/bin/python3",
+    "/Users/ayansharma/anaconda3/bin/python",
+    "python3",
+    "python",
+  ];
+  for (const cmd of candidates) {
+    if (cmd.includes("/") && !fs.existsSync(cmd)) continue;
+    try {
+      const r = spawnSync(cmd, ["-c", "import tinytuya"], { encoding: "utf8", timeout: 3000 });
+      if (r.status === 0) {
+        const ver = spawnSync(cmd, ["--version"], { encoding: "utf8" });
+        console.log(`[LAN] Using Python: ${cmd} (${(ver.stdout || ver.stderr || "").trim()})`);
+        return cmd;
+      }
+    } catch (_) {}
+  }
+  console.warn("[LAN] No Python with tinytuya found — trying python3");
+  return "python3";
+}
+
+const PYTHON = findPython();
 
 let daemon = null;
 let ready = false;
@@ -14,7 +40,7 @@ let queue = [];
 function start() {
   if (daemon) return;
 
-  daemon = spawn("python3", [path.join(__dirname, "lan_daemon.py")], {
+  daemon = spawn(PYTHON, [path.join(__dirname, "lan_daemon.py")], {
     stdio: ["pipe", "pipe", "pipe"],
   });
 
@@ -59,6 +85,11 @@ function lanSet(bulbIds, params) {
   write({ bulbs: bulbIds, params });
 }
 
+function reloadConfig() {
+  write({ reload: true });
+  console.log("[LAN] Sent config reload signal");
+}
+
 function stop() {
   if (daemon) {
     daemon.kill();
@@ -67,4 +98,4 @@ function stop() {
   }
 }
 
-module.exports = { start, stop, lanSet };
+module.exports = { start, stop, lanSet, reloadConfig, PYTHON };
